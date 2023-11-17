@@ -23,17 +23,32 @@ public class RoomController : MonoBehaviour
 
     public Room CurrentRoom
     {
-        get 
-        { 
-            return _currentRoom; 
+        get
+        {
+            return _currentRoom;
         }
         set
         {
-            if(_currentRoom != value)
+            if (!_currentRoom)
             {
-                MoveCameraToRoom(value);
+                _currentRoom = value;
+                MoveCameraToRoom(_currentRoom);
             }
-            _currentRoom = value;
+            else
+            {
+                if (_currentRoom != value)
+                {
+                    _currentRoom.IsVisited = true;
+
+                    _currentRoom = value;
+                    MoveCameraToRoom(_currentRoom);
+
+                    if (!_currentRoom.IsVisited)
+                    {
+                        _currentRoom.SpawnEnemies();
+                    }
+                }
+            }
         }
     }
 
@@ -62,7 +77,7 @@ public class RoomController : MonoBehaviour
     {
         UpdateRoomQueue();
 
-        if(Input.GetKeyDown(KeyCode.Space) && _currentRoom)
+        if (Input.GetKeyDown(KeyCode.Space) && _currentRoom)
         {
             CurrentRoom.OpenDoors();
         }
@@ -171,7 +186,7 @@ public class RoomController : MonoBehaviour
 
     private void MoveCameraToRoom(Room room)
     {
-        if(_currentRoom)
+        if (_currentRoom)
         {
             _currentRoom.CloseDoors();
         }

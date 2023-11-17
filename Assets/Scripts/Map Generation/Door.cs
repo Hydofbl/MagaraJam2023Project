@@ -27,12 +27,4 @@ public class Door : MonoBehaviour
         _collider.isTrigger = status;
         IsOpen = status;
     }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if(other.CompareTag("Cursor") && IsOpen)
-        {
-            RoomController.Instance.CurrentRoom = ConnectedRoom;
-        }
-    }
 }

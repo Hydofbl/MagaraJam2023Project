@@ -1,7 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+
+[Serializable]
+public class SpawningEnemyData
+{
+    public GameObject EnemyPref;
+    public int EnemyAmount;
+}
 
 public class Room : MonoBehaviour
 {
@@ -12,6 +20,12 @@ public class Room : MonoBehaviour
     public int Y;
 
     public List<Door> DoorList = new List<Door>();
+
+    [Header("Enemy Spawning")]
+    [SerializeField] private List<Transform> spawnPoints;
+    [SerializeField] private List<SpawningEnemyData> spawningEnemyDatas;
+
+    public bool IsVisited;
 
     private void Start()
     {
@@ -101,11 +115,6 @@ public class Room : MonoBehaviour
         return RoomController.Instance.DoesRoomExist(X, Y - 1);
     }
 
-    public Vector3 GetRoomCenter()
-    {
-        return new Vector3(X * Width, Y * Height);
-    }
-
     public void OpenDoors()
     {
         DoorList.Where(door => door.gameObject.activeSelf).ToList()
@@ -116,5 +125,10 @@ public class Room : MonoBehaviour
     {
         DoorList.Where(door => door.gameObject.activeSelf).ToList()
             .ForEach(door => door.SetDoorStatus(false));
+    }
+
+    public void SpawnEnemies()
+    {
+        EnemySpawner.Instance.SpawnEnemies(spawningEnemyDatas, spawnPoints);
     }
 }
