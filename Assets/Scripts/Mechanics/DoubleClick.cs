@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class DoubleClick : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField]float _timer;
+    [SerializeField]float _timer = 0.25f;
     float currentTimer;
     [SerializeField]GameObject _tab;
     bool _clickTime = false;
