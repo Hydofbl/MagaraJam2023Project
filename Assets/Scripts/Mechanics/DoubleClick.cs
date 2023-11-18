@@ -46,13 +46,18 @@ public class DoubleClick : MonoBehaviour, IPointerClickHandler
         else if (_clickTime && !readMeOpened) 
         {
             _errorTab.SetActive(true);
-            
         }
 
         else if (gameObject.name == "ReadMe.txt")
         {
             _tab.SetActive(true);
             GameEventsManager.instance.ReadMeOpened();
+        }
+
+        else if (gameObject.name == "CurseOfTheCursor")
+        {
+            _tab.SetActive(true);
+            ScenesManager.Instance.LoadNewGame();
         }
 
         else _tab.SetActive(true);
