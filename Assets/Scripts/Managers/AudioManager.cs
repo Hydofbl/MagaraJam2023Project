@@ -1,18 +1,46 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static AudioManager instance;
+    [SerializeField] private AudioSource audioSource, effectsSource;
+
+
+
+    private void Awake()
     {
-        
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+        ChangeMasterVolume(0.3f);
+    }
+    public void PlaySound(AudioClip clip)
+    {
+        effectsSource.PlayOneShot(clip);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ChangeMasterVolume(float value)
     {
-        
+        AudioListener.volume = value;
+    }
+
+    public void ToggleSound()
+    {
+        audioSource.mute = !audioSource.mute;
+    }
+
+    public void ToggleEffects()
+    {
+        effectsSource.mute = !effectsSource.mute;
     }
 }
