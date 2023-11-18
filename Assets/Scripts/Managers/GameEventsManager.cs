@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class GameEventsManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] float msnEventTimer;
+    [SerializeField] GameObject msnObject;
+    
+    IEnumerator EventActivator()
     {
-        
+        yield return new WaitForSeconds(msnEventTimer);
+        msnObject.SetActive(true);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Start()
     {
-        
+        StartCoroutine(EventActivator());
     }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
 }
