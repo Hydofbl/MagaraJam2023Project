@@ -18,14 +18,31 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    public void SpawnEnemies(List<SpawningEnemyData> spawningEnemyDatas, List<Transform> spawnPoints)
+    public int SpawnEnemies(List<SpawningEnemyData> spawningEnemyDatas, List<SpawnPoint> spawnPoints, Room room)
     {
+        int count = 0;
+
         foreach (var data in spawningEnemyDatas)
         {
             for (int i = 0; i < data.EnemyAmount; i++)
             {
-                Instantiate(data.EnemyPref, spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Count)].position, Quaternion.identity);
+                SpawnPoint spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
+
+                if(spawnPoint.IsUsed)
+                {
+                    i--;
+                    continue;
+                }
+
+                // instantiate enemy and set it's room
+                Instantiate(data.EnemyPref, spawnPoint.SpawnPointTransform.position, Quaternion.identity).GetComponent<Enemy>().Room = room;
+
+                spawnPoint.IsUsed = true;
             }
+
+            count += data.EnemyAmount;
         }
+
+        return count;
     }
 }

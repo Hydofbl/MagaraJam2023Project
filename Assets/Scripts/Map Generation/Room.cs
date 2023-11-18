@@ -11,8 +11,25 @@ public class SpawningEnemyData
     public int EnemyAmount;
 }
 
+[Serializable]
+public class SpawnPoint
+{
+    public Transform SpawnPointTransform;
+    [HideInInspector]
+    public bool IsUsed = false;
+}
+
+public enum RoomStatus
+{
+    undiscovered,
+    cleared,
+}
+
 public class Room : MonoBehaviour
 {
+    [Header("Room Info")]
+    public RoomStatus Status;
+
     public int Width;
     public int Height;
 
@@ -22,10 +39,36 @@ public class Room : MonoBehaviour
     public List<Door> DoorList = new List<Door>();
 
     [Header("Enemy Spawning")]
-    [SerializeField] private List<Transform> spawnPoints;
+    [SerializeField] private List<SpawnPoint> spawnPoints;
     [SerializeField] private List<SpawningEnemyData> spawningEnemyDatas;
 
-    public bool IsVisited;
+    private int _spawnedEnemyCount;
+
+    public int SpawnedEnemyCount
+    {
+        get 
+        { 
+            return _spawnedEnemyCount; 
+        }
+        set 
+        {
+            // Means setting enemyCount
+            if (_spawnedEnemyCount == 0)
+            {
+                _spawnedEnemyCount = value;
+            }
+            // Means enemy dying
+            else
+            {
+                _spawnedEnemyCount = value;
+
+                if(_spawnedEnemyCount <= 0)
+                {
+                    OpenDoors();
+                }
+            }
+        }
+    }
 
     private void Start()
     {
@@ -45,25 +88,25 @@ public class Room : MonoBehaviour
             switch (door.type)
             {
                 case Door.DoorType.left:
-                    if (!GetLeft())
+                    if (!HasNextRoom(X-1, Y))
                     {
                         door.gameObject.SetActive(false);
                     }
                     break;
                 case Door.DoorType.right:
-                    if (!GetRight())
+                    if (!HasNextRoom(X + 1, Y))
                     {
                         door.gameObject.SetActive(false);
                     }
                     break;
                 case Door.DoorType.top:
-                    if (!GetTop())
+                    if (!HasNextRoom(X, Y+1))
                     {
                         door.gameObject.SetActive(false);
                     }
                     break;
                 case Door.DoorType.bottom:
-                    if (!GetBottom())
+                    if (!HasNextRoom(X, Y-1))
                     {
                         door.gameObject.SetActive(false);
                     }
@@ -95,24 +138,9 @@ public class Room : MonoBehaviour
         });
     }
 
-    public bool GetRight()
+    public bool HasNextRoom(int x, int y)
     {
-        return RoomController.Instance.DoesRoomExist(X + 1, Y);
-    }
-
-    public bool GetLeft()
-    {
-        return RoomController.Instance.DoesRoomExist(X - 1, Y);
-    }
-
-    public bool GetTop()
-    {
-        return RoomController.Instance.DoesRoomExist(X, Y + 1);
-    }
-
-    public bool GetBottom()
-    {
-        return RoomController.Instance.DoesRoomExist(X, Y - 1);
+        return RoomController.Instance.DoesRoomExist(x, y);
     }
 
     public void OpenDoors()
@@ -129,6 +157,6 @@ public class Room : MonoBehaviour
 
     public void SpawnEnemies()
     {
-        EnemySpawner.Instance.SpawnEnemies(spawningEnemyDatas, spawnPoints);
+        _spawnedEnemyCount = EnemySpawner.Instance.SpawnEnemies(spawningEnemyDatas, spawnPoints, this);
     }
 }

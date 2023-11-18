@@ -51,22 +51,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1777c943dac6404abd29c8f843e585b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Status: 0
   Width: 18
   Height: 10
   X: 0
   Y: 0
   DoorList: []
   spawnPoints:
-  - {fileID: 3674695173932843013}
-  - {fileID: 1625401875275563478}
-  - {fileID: 8200356494104505624}
-  - {fileID: 4341913406159586915}
-  - {fileID: 1632319915427853868}
-  - {fileID: 747917573698097056}
-  - {fileID: 5272267573911259760}
-  - {fileID: 3600694994993772649}
-  - {fileID: 199579794335156372}
-  - {fileID: 7091307856674217918}
+  - SpawnPointTransform: {fileID: 3674695173932843013}
+    IsUsed: 0
+  - SpawnPointTransform: {fileID: 1625401875275563478}
+    IsUsed: 0
+  - SpawnPointTransform: {fileID: 8200356494104505624}
+    IsUsed: 0
+  - SpawnPointTransform: {fileID: 4341913406159586915}
+    IsUsed: 0
+  - SpawnPointTransform: {fileID: 1632319915427853868}
+    IsUsed: 0
+  - SpawnPointTransform: {fileID: 747917573698097056}
+    IsUsed: 0
+  - SpawnPointTransform: {fileID: 5272267573911259760}
+    IsUsed: 0
+  - SpawnPointTransform: {fileID: 3600694994993772649}
+    IsUsed: 0
+  - SpawnPointTransform: {fileID: 199579794335156372}
+    IsUsed: 0
+  - SpawnPointTransform: {fileID: 7091307856674217918}
+    IsUsed: 0
   spawningEnemyDatas:
   - EnemyPref: {fileID: 412658454866422035, guid: b5c749f172a237e4ab9c5f8cabfd5919, type: 3}
     EnemyAmount: 3

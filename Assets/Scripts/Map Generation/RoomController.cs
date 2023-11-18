@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 [Serializable]
 public class RoomInfo
@@ -20,6 +19,7 @@ public class RoomController : MonoBehaviour
     public List<Room> LoadedRooms = new List<Room>();
 
     [SerializeField] private CinemachineVirtualCamera virtualCamera;
+    [SerializeField] private CinemachineBrain brain;
 
     public Room CurrentRoom
     {
@@ -29,24 +29,22 @@ public class RoomController : MonoBehaviour
         }
         set
         {
+            // First Room
             if (!_currentRoom)
             {
                 _currentRoom = value;
-                MoveCameraToRoom(_currentRoom);
+                _currentRoom.Status = RoomStatus.cleared;
+                StartCoroutine(MoveCameraToRoom(_currentRoom));
             }
             else
             {
                 if (_currentRoom != value)
                 {
-                    _currentRoom.IsVisited = true;
+                    _currentRoom.Status = RoomStatus.cleared;
+                    _currentRoom.CloseDoors();
 
                     _currentRoom = value;
-                    MoveCameraToRoom(_currentRoom);
-
-                    if (!_currentRoom.IsVisited)
-                    {
-                        _currentRoom.SpawnEnemies();
-                    }
+                    StartCoroutine(MoveCameraToRoom(_currentRoom));
                 }
             }
         }
@@ -76,11 +74,6 @@ public class RoomController : MonoBehaviour
     private void Update()
     {
         UpdateRoomQueue();
-
-        if (Input.GetKeyDown(KeyCode.Space) && _currentRoom)
-        {
-            CurrentRoom.OpenDoors();
-        }
     }
 
     #region Map Generation
@@ -166,7 +159,6 @@ public class RoomController : MonoBehaviour
     {
         LoadedRooms.ForEach(room => room.ConnectDoors());
     }
-
     #endregion
 
     public bool DoesRoomExist(RoomInfo info)
@@ -184,13 +176,20 @@ public class RoomController : MonoBehaviour
         return LoadedRooms.Find(room => room.X == x && room.Y == y);
     }
 
-    private void MoveCameraToRoom(Room room)
+    IEnumerator MoveCameraToRoom(Room room)
     {
-        if (_currentRoom)
-        {
-            _currentRoom.CloseDoors();
-        }
-
         virtualCamera.Follow = room.transform;
+
+        // wait for camera's blend
+        yield return new WaitForSeconds(brain.m_DefaultBlend.m_Time/4);   
+
+        if (room.Status.Equals(RoomStatus.undiscovered))
+        {
+            room.SpawnEnemies();
+        }
+        else if (room.Status.Equals(RoomStatus.cleared))
+        {
+            room.OpenDoors();
+        }
     }
 }

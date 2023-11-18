@@ -31,9 +31,9 @@ public class CursorManager : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.TryGetComponent<Enemy>(out Enemy Enemy))
+        if (collision.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
         {
-            Enemy.GetHit(cursorDamage);
+            enemy.GetHit(cursorDamage);
         }
     }
 }

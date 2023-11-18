@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public Room Room;
     [SerializeField] private float health;
     
     public void GetHit(float hitDamage)
@@ -15,6 +16,7 @@ public class Enemy : MonoBehaviour
             health = 0;
 
             // Die
+            Room.SpawnedEnemyCount--;
             Destroy(gameObject);
         }
     }
