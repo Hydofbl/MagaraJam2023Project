@@ -1,8 +1,10 @@
 using UnityEngine;
+using static GameManager;
 
 public enum EnemyState
 {
     Idle,
+    GetHit,
     PreAttack,
     Attack,
     Die
@@ -18,7 +20,7 @@ public class BaseEnemyManager : MonoBehaviour
     // Store the previous state of the game
     public EnemyState PreviousState;
 
-    [SerializeField] 
+    [SerializeField]
     [Range(0f, 15f)]
     private float attackTime = 3f;
     [SerializeField]
@@ -40,6 +42,9 @@ public class BaseEnemyManager : MonoBehaviour
             case EnemyState.Idle:
 
                 break;
+            case EnemyState.GetHit:
+                PlayHitEffect();
+                break;
             case EnemyState.PreAttack:
                 //
                 break;
@@ -48,6 +53,11 @@ public class BaseEnemyManager : MonoBehaviour
                 break;
             case EnemyState.Die:
                 Room.SpawnedEnemyCount--;
+
+                DungeonController.Instance.CurrentEnemyCount--;
+                GameDataManager.Instance.AddCoin(_enemyStats.CurrentCoinAward);
+                IngameUIManager.Instance.SetCoinAmount(GameDataManager.Instance.GetCoin());
+
                 Destroy(gameObject);
                 break;
             default:
@@ -57,12 +67,12 @@ public class BaseEnemyManager : MonoBehaviour
 
         enemyStateTimer += Time.deltaTime;
 
-        if(enemyStateTimer >= preAttackTime && CurrentState != EnemyState.PreAttack)
+        if (enemyStateTimer >= preAttackTime && CurrentState != EnemyState.PreAttack)
         {
             ChangeState(EnemyState.PreAttack);
         }
 
-        if(enemyStateTimer >= attackTime)
+        if (enemyStateTimer >= attackTime)
         {
             enemyStateTimer = 0f;
 
@@ -75,19 +85,36 @@ public class BaseEnemyManager : MonoBehaviour
         CurrentState = state;
     }
 
-    public void GetHit(float hitDamage)
+    public void GetHit(int hitDamage)
     {
         _enemyStats.CurrentHealth -= hitDamage;
 
         if (_enemyStats.CurrentHealth <= 0)
         {
-            _enemyStats.CurrentHealth = 0;
             ChangeState(EnemyState.Die);
         }
+
+        PreviousState = CurrentState;
+        ChangeState(EnemyState.GetHit);
+    }
+
+    private void PlayHitEffect()
+    {
+
+
+        ChangeState(PreviousState);
     }
 
     protected virtual void Attack()
     {
         ChangeState(EnemyState.Idle);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Cursor"))
+        {
+            GetHit(CursorManager.Instance.CursorDamage);
+        }
     }
 }

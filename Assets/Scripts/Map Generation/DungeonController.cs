@@ -13,11 +13,12 @@ public class RoomInfo
     public int Y;
 }
 
-public class RoomController : MonoBehaviour
+public class DungeonController : MonoBehaviour
 {
     public GameObject[] RoomPrefs;
     public List<Room> LoadedRooms = new List<Room>();
 
+    [Header("Virtual Camera")]
     [SerializeField] private CinemachineVirtualCamera virtualCamera;
     [SerializeField] private CinemachineBrain brain;
 
@@ -57,7 +58,27 @@ public class RoomController : MonoBehaviour
     private bool _isLoadingRoom = false;
     private bool _isUnconnectedDoorsRemoved = false;
 
-    public static RoomController Instance;
+    private int _currentEnemyCount;
+
+    public int TotalEnemyCount = 0;
+
+    public int CurrentEnemyCount
+    {
+        get { return _currentEnemyCount; }
+        set
+        {
+            _currentEnemyCount = value;
+
+            if (_currentEnemyCount == 0)
+            {
+                // Something Something
+
+                GameManager.Instance.ChangeState(GameState.LevelEnd);
+            }
+        }
+    }
+
+    public static DungeonController Instance;
 
     private void Awake()
     {
@@ -91,6 +112,7 @@ public class RoomController : MonoBehaviour
                 _isUnconnectedDoorsRemoved = true;
                 RemoveUnconnectedDoors();
                 ConnectDoors();
+                CalculateEnemyCount();
                 CurrentRoom = LoadedRooms.Find(room => room.X == 0 && room.Y == 0);
             }
 
@@ -145,6 +167,11 @@ public class RoomController : MonoBehaviour
         room.Y = _currentRoomData.Y;
         room.transform.parent = transform;
 
+        if(room.X == 0 && room.Y == 0)
+        {
+            room.IsStartingRoom = true;
+        }
+
         _isLoadingRoom = false;
 
         LoadedRooms.Add(room);
@@ -190,6 +217,21 @@ public class RoomController : MonoBehaviour
         else if (room.Status.Equals(RoomStatus.cleared))
         {
             room.OpenDoors();
+        }
+    }
+
+    private void CalculateEnemyCount()
+    {
+        foreach(Room room in LoadedRooms)
+        {
+            if (room.IsStartingRoom)
+                continue;
+
+            TotalEnemyCount += room.GetTotalEnemyOnRoom();
+            CurrentEnemyCount = TotalEnemyCount;
+
+            IngameUIManager.Instance.SetTotalEnemy(TotalEnemyCount);
+            IngameUIManager.Instance.SetCurrentEnemy(CurrentEnemyCount);
         }
     }
 }

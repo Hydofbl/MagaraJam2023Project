@@ -22,7 +22,7 @@ public class DungeonGenerator : MonoBehaviour
             roomInfo.X = room.x;
             roomInfo.Y = room.y;
 
-            RoomController.Instance.AddRoom(roomInfo);
+            DungeonController.Instance.AddRoom(roomInfo);
         }
     }
 }

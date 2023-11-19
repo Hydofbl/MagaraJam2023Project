@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e69bf4b07849b44abb5d6716b808d1f, type: 3}
-  m_Name: DungeonGenerationData
+  m_Script: {fileID: 11500000, guid: 0c2d4145125ad3f4586d4560b943fdd2, type: 3}
+  m_Name: DefaultCursorData
   m_EditorClassIdentifier: 
-  NumberOfCrawlers: 1
-  IterationMin: 3
-  IterationMax: 3
+  Health: 100
+  Damage: 15
