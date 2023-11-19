@@ -35,7 +35,7 @@ public class EnemySpawner : MonoBehaviour
                 }
 
                 // instantiate enemy and set it's room
-                Instantiate(data.EnemyPref, spawnPoint.SpawnPointTransform.position, Quaternion.identity).GetComponent<Enemy>().Room = room;
+                Instantiate(data.EnemyPref, spawnPoint.SpawnPointTransform.position, Quaternion.identity).GetComponent<BaseEnemyManager>().Room = room;
 
                 spawnPoint.IsUsed = true;
             }

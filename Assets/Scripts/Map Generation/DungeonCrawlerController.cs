@@ -41,6 +41,12 @@ public class DungeonCrawlerController : MonoBehaviour
             foreach(DungeonCrawler crawler in dungeonCrawlers) 
             {
                 Vector2Int newPos = crawler.Move(_directionMovementMap);
+
+                while (positionsVisited.Contains(newPos))
+                {
+                    newPos = crawler.Move(_directionMovementMap);
+                }
+
                 positionsVisited.Add(newPos);
             }
         }

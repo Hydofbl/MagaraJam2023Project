@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 3587234737274524216}
   - component: {fileID: -2669505229956194160}
   - component: {fileID: 1395230154862456161}
-  - component: {fileID: 3548007581809053261}
+  - component: {fileID: -1015321238870674121}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: MeleeEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,8 +74,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 975918977
-  m_SortingLayer: 2
+  m_SortingLayerID: 1286602019
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 1, g: 0.30566037, b: 0.30566037, a: 1}
@@ -149,7 +149,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &1395230154862456161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,8 +162,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 184edc960b855a149813bddb805079cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 30
---- !u!114 &3548007581809053261
+  CurrentHealth: 0
+  CurrentDamage: 0
+  CurrentCoinAward: 0
+  CurrentProjectileSpeed: 0
+  enemyData: {fileID: 11400000, guid: d613cab48c6d3214aa1c79676ab17f9c, type: 2}
+--- !u!114 &-1015321238870674121
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -172,6 +176,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 412658454866422035}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a7c1511525801741a4c626b45ef7935, type: 3}
+  m_Script: {fileID: 11500000, guid: b3285e0e3e25a9f4a8eceb6af091c849, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Room: {fileID: 0}
+  CurrentState: 0
+  PreviousState: 0
+  attackTime: 3
+  preAttackTime: 1.5

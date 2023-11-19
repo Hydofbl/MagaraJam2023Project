@@ -22,7 +22,7 @@ public class CursorManager : MonoBehaviour
     {
         if(other.TryGetComponent<Door>(out Door door))
         {
-            if (other.CompareTag("Door") && door.IsOpen)
+            if (other.CompareTag("Door") && door.IsOpen && door.HasNextRoom)
             {
                 RoomController.Instance.CurrentRoom = door.ConnectedRoom;
             }
@@ -31,9 +31,9 @@ public class CursorManager : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
+        if (collision.gameObject.TryGetComponent<BaseEnemyManager>(out BaseEnemyManager enemyManager))
         {
-            enemy.GetHit(cursorDamage);
+            enemyManager.GetHit(cursorDamage);
         }
     }
 }

@@ -13,18 +13,26 @@ public class Door : MonoBehaviour
     public Room ConnectedRoom;
     public bool IsOpen;
 
-    private BoxCollider2D _collider;
+    public bool HasNextRoom;
 
+    private BoxCollider2D _collider;
+    private SpriteRenderer _spriteRenderer;
     private void Start()
     {
         _collider = GetComponent<BoxCollider2D>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
 
+        HasNextRoom = true;
         SetDoorStatus(false);
     }
 
     public void SetDoorStatus(bool status)
     {
-        _collider.isTrigger = status;
-        IsOpen = status;
+        if(HasNextRoom)
+        {
+            _spriteRenderer.enabled = !status;
+            _collider.isTrigger = status;
+            IsOpen = status;
+        }
     }
 }

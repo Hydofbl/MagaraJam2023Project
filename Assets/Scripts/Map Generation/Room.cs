@@ -90,25 +90,25 @@ public class Room : MonoBehaviour
                 case Door.DoorType.left:
                     if (!HasNextRoom(X-1, Y))
                     {
-                        door.gameObject.SetActive(false);
+                        door.HasNextRoom = false;
                     }
                     break;
                 case Door.DoorType.right:
                     if (!HasNextRoom(X + 1, Y))
                     {
-                        door.gameObject.SetActive(false);
+                        door.HasNextRoom = false;
                     }
                     break;
                 case Door.DoorType.top:
                     if (!HasNextRoom(X, Y+1))
                     {
-                        door.gameObject.SetActive(false);
+                        door.HasNextRoom = false;
                     }
                     break;
                 case Door.DoorType.bottom:
                     if (!HasNextRoom(X, Y-1))
                     {
-                        door.gameObject.SetActive(false);
+                        door.HasNextRoom = false;
                     }
                     break;
             }
