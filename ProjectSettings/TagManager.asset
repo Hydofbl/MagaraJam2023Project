@@ -17,7 +17,7 @@ TagManager:
   - Wall
   - Door
   - Enemy
-  - 
+  - Minimap
   - 
   - 
   - 
@@ -41,6 +41,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Minimap
+    uniqueID: 3840591137
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

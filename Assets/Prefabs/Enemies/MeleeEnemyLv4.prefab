@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1395230154862456161}
   - component: {fileID: -1015321238870674121}
   m_Layer: 8
-  m_Name: MeleeEnemy
+  m_Name: MeleeEnemyLv4
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 0.30566037, b: 0.30566037, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -166,7 +166,7 @@ MonoBehaviour:
   CurrentDamage: 0
   CurrentCoinAward: 0
   CurrentProjectileSpeed: 0
-  enemyData: {fileID: 11400000, guid: d613cab48c6d3214aa1c79676ab17f9c, type: 2}
+  enemyData: {fileID: 11400000, guid: 620a8816fa5cf1f4d8b1631dda9c7203, type: 2}
 --- !u!114 &-1015321238870674121
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,4 +9,6 @@ public class EnemyData : ScriptableObject
     public int Damage;
     public int CoinAward;
     public float ProjectileSpeed;
+
+    public Sprite[] EnemySprites;
 }

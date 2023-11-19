@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0de6859bf7911ab419808cba8ff2ab75, type: 3}
+  m_Name: RangedEnemyDataLv4
+  m_EditorClassIdentifier: 
+  Health: 30
+  Damage: 15
+  CoinAward: 50
+  ProjectileSpeed: 2
+  EnemySprites:
+  - {fileID: 1536594386, guid: 68a8e1348988e7241a64384e7178fe9a, type: 3}
+  - {fileID: 1642199358, guid: 68a8e1348988e7241a64384e7178fe9a, type: 3}
+  - {fileID: -1281538643, guid: 68a8e1348988e7241a64384e7178fe9a, type: 3}
+  - {fileID: -926333999, guid: 68a8e1348988e7241a64384e7178fe9a, type: 3}

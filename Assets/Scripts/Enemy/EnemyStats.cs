@@ -13,6 +13,11 @@ public class EnemyStats : MonoBehaviour
 
     private Transform _targetTransform;
 
+    private void Awake()
+    {
+        GetComponent<SpriteRenderer>().sprite = enemyData.EnemySprites[Random.Range(0, enemyData.EnemySprites.Length)];
+    }
+
     void Start()
     {
         _targetTransform = GameObject.FindGameObjectWithTag("Cursor").transform;
