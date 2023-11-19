@@ -4,13 +4,9 @@ using UnityEngine;
 
 public class EnemyStats : MonoBehaviour
 {
-    [HideInInspector]
-    public float CurrentHealth;
-    [HideInInspector]
-    public float CurrentDamage;
-    [HideInInspector]
-    public float CurrentCoinAward;
-    [HideInInspector]
+    public int CurrentHealth;
+    public int CurrentDamage;
+    public int CurrentCoinAward;
     public float CurrentProjectileSpeed;
 
     [SerializeField] private EnemyData enemyData;
