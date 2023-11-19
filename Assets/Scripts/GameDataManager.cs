@@ -82,6 +82,6 @@ public class GameDataManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        //PlayerPrefs.DeleteAll();
+        PlayerPrefs.DeleteAll();
     }
 }

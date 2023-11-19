@@ -43,6 +43,11 @@ public class GameManager : MonoBehaviour
 
         // If game stopped, continue game
         Time.timeScale = 1f;
+        
+    }
+
+    private void Start()
+    {
         SetInGameDatas();
     }
 

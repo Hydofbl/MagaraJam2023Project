@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using UnityEngine.UIElements;
 
 public class İntroController : MonoBehaviour
 {
@@ -33,7 +34,15 @@ public class İntroController : MonoBehaviour
 
     private void Start()
     {
+        if(!PlayerPrefs.HasKey("isIntroPlayed"))
+        {
+            PlayerPrefs.SetInt("isIntroPlayed", 1);
+            StartCoroutine(FadeInIntro(activationTimer));
+        }
 
-        StartCoroutine(FadeInIntro(activationTimer));
+        else
+        {
+            introObj.SetActive(false);
+        }
     }
 }
