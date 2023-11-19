@@ -28,6 +28,7 @@ public enum RoomStatus
 public class Room : MonoBehaviour
 {
     [Header("Room Info")]
+    public bool IsStartingRoom;
     public RoomStatus Status;
 
     public int Width;
@@ -72,7 +73,7 @@ public class Room : MonoBehaviour
 
     private void Start()
     {
-        if(RoomController.Instance == null)
+        if(DungeonController.Instance == null)
         {
             return;
         }
@@ -123,16 +124,16 @@ public class Room : MonoBehaviour
             switch (door.type)
             {
                 case Door.DoorType.left:
-                    door.ConnectedRoom = RoomController.Instance.GetRoom(X - 1, Y);
+                    door.ConnectedRoom = DungeonController.Instance.GetRoom(X - 1, Y);
                     break;
                 case Door.DoorType.right:
-                    door.ConnectedRoom = RoomController.Instance.GetRoom(X + 1, Y);
+                    door.ConnectedRoom = DungeonController.Instance.GetRoom(X + 1, Y);
                     break;
                 case Door.DoorType.top:
-                    door.ConnectedRoom = RoomController.Instance.GetRoom(X, Y + 1);
+                    door.ConnectedRoom = DungeonController.Instance.GetRoom(X, Y + 1);
                     break;
                 case Door.DoorType.bottom:
-                    door.ConnectedRoom = RoomController.Instance.GetRoom(X, Y - 1);
+                    door.ConnectedRoom = DungeonController.Instance.GetRoom(X, Y - 1);
                     break;
             }
         });
@@ -140,7 +141,7 @@ public class Room : MonoBehaviour
 
     public bool HasNextRoom(int x, int y)
     {
-        return RoomController.Instance.DoesRoomExist(x, y);
+        return DungeonController.Instance.DoesRoomExist(x, y);
     }
 
     public void OpenDoors()
@@ -158,5 +159,14 @@ public class Room : MonoBehaviour
     public void SpawnEnemies()
     {
         _spawnedEnemyCount = EnemySpawner.Instance.SpawnEnemies(spawningEnemyDatas, spawnPoints, this);
+    }
+
+    public int GetTotalEnemyOnRoom()
+    {
+        int count = 0;
+
+        spawningEnemyDatas.ForEach(data => count += data.EnemyAmount);
+
+        return count;
     }
 }

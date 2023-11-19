@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    [SerializeField] private Transform parentTransform;
+
     public static EnemySpawner Instance;
 
     private void Start()
@@ -35,7 +37,7 @@ public class EnemySpawner : MonoBehaviour
                 }
 
                 // instantiate enemy and set it's room
-                Instantiate(data.EnemyPref, spawnPoint.SpawnPointTransform.position, Quaternion.identity).GetComponent<BaseEnemyManager>().Room = room;
+                Instantiate(data.EnemyPref, spawnPoint.SpawnPointTransform.position, Quaternion.identity, parentTransform).GetComponent<BaseEnemyManager>().Room = room;
 
                 spawnPoint.IsUsed = true;
             }

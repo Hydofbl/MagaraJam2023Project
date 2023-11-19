@@ -1,19 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+
+// Define the different states of the game
+public enum GameState
+{
+    Gameplay,
+    Paused,
+    GameOver,
+    LevelEnd
+}
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-
-    // Define the different states of the game
-    public enum GameState
-    {
-        Gameplay,
-        Paused,
-        GameOver
-    }
 
     // Store the current state of the game
     public GameState CurrentState;
@@ -24,12 +23,9 @@ public class GameManager : MonoBehaviour
     public GameObject PauseScreen;
     public GameObject ResultScreen;
 
-    [Header("Current Stat Displays")]
-    public TMP_Text CurrentHealthDisplay;
-    public TMP_Text CurrentCoinDisplay;
-
-    // Flag to check if the game is over
+    // Flags to check if the game is over or the level end
     public bool IsGameOver = false;
+    public bool IsLevelEnd = false;
 
     private void Awake()
     {
@@ -44,6 +40,10 @@ public class GameManager : MonoBehaviour
         }
 
         //DisableScreens();
+
+        // If game stopped, continue game
+        Time.timeScale = 1f;
+        SetInGameDatas();
     }
 
     private void Update()
@@ -60,6 +60,21 @@ public class GameManager : MonoBehaviour
                 CheckForPauseAndResume();
                 break;
 
+            case GameState.LevelEnd:
+                if (!IsLevelEnd)
+                {
+                    IsLevelEnd = true;
+                    // Stop the game
+                    Time.timeScale = 0f;
+                    Debug.Log("Level Done");
+
+                    // Save gained coins etc. could be shown
+                    GameDataManager.Instance.SaveCoinAmount();
+                    GameDataManager.Instance.SaveNextLevel(GameDataManager.Instance.GetLevel() + 1);
+
+                    //DisplayResults();
+                }
+                break;
             case GameState.GameOver:
                 // GameOver State Codes
                 if (!IsGameOver)
@@ -68,6 +83,11 @@ public class GameManager : MonoBehaviour
                     // Stop the game
                     Time.timeScale = 0f;
                     Debug.Log("Game is Over");
+
+                    // Save gained coins etc. could be shown
+                    GameDataManager.Instance.SaveCoinAmount();
+                    GameDataManager.Instance.SaveNextLevel(GameDataManager.Instance.GetLevel());
+
                     //DisplayResults();
                 }
                 break;
@@ -121,13 +141,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void GameOver()
-    {
-        ChangeState(GameState.GameOver);
-    }
-
     void DisplayResults()
     {
         ResultScreen.SetActive(true);
+    }
+
+    void SetInGameDatas()
+    {
+        GameDataManager.Instance.LoadDatas();
+
+        IngameUIManager.Instance.SetCoinAmount(GameDataManager.Instance.GetCoin());
     }
 }
