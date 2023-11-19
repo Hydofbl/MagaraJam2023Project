@@ -120,6 +120,7 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0f;
             PauseScreen.SetActive(true);
             Debug.Log("Game is paused");
+            Cursor.visible = true;
         }
     }
 
@@ -131,6 +132,7 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 1f;
             PauseScreen.SetActive(false);
             Debug.Log("Game is resumed");
+            Cursor.visible = false;
         }
     }
 
@@ -152,6 +154,7 @@ public class GameManager : MonoBehaviour
     void DisplayResults()
     {
         ResultScreen.SetActive(true);
+        Cursor.visible = true;
     }
 
     void SetInGameDatas()
