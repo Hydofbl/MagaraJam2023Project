@@ -38,5 +38,8 @@ public class IngameUIManager : MonoBehaviour
         coinText.text = amount.ToString();
     }
 
-
+    public void GoToNextScene()
+    {
+        ScenesManager.Instance.LoadScene("Level" + GameDataManager.Instance.GetLevel());
+    }
 }

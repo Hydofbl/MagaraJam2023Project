@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // Define the different states of the game
 public enum GameState
@@ -77,7 +78,9 @@ public class GameManager : MonoBehaviour
                     GameDataManager.Instance.SaveCoinAmount();
                     GameDataManager.Instance.SaveNextLevel(GameDataManager.Instance.GetLevel() + 1);
 
-                    //DisplayResults();
+                    DisplayResults();
+
+                    
                 }
                 break;
             case GameState.GameOver:

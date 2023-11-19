@@ -5,39 +5,47 @@ using UnityEngine.SceneManagement;
 
 public class ScenesManager : MonoBehaviour
 {
-        public static ScenesManager Instance;
-        void Awake()
-        {
-            Instance = this;
-        }
+    public static ScenesManager Instance;
+    void Awake()
+    {
+        Instance = this;
+    }
 
-        public enum Scene
-        {
-            MainMenuScene,
-            SampleScene
-        }
+    public enum Scene
+    {
+        MainMenuScene,
+        Level1,
+        Level2,
+        Level3,
+        Level4
+    }
 
-        public void LoadScene(Scene scene)
-        {
-            SceneManager.LoadScene(scene.ToString());
-        }
-        public void LoadNewGame()
-        {
-            SceneManager.LoadScene(Scene.SampleScene.ToString());
-        }
+    public void LoadScene(Scene scene)
+    {
+        SceneManager.LoadScene(scene.ToString());
+    }
 
-        public void LoadWantedScene()
-        {
-            SceneManager.LoadScene(Scene.SampleScene.ToString());
-        }
+    public void LoadScene(string sceneName) 
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+    public void LoadNewGame()
+    {
+        SceneManager.LoadScene(Scene.Level1.ToString());
+    }
 
-        public void LoadNextScene()
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        }
+    public void LoadWantedScene()
+    {
+        SceneManager.LoadScene(Scene.Level1.ToString());
+    }
 
-        public void LoadMainMenu()
-        {
-            SceneManager.LoadScene(Scene.MainMenuScene.ToString());
-        }
+    public void LoadNextScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene(Scene.MainMenuScene.ToString());
+    }
 }
