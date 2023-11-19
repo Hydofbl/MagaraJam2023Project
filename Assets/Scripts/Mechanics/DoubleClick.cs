@@ -23,7 +23,6 @@ public class DoubleClick : MonoBehaviour, IPointerClickHandler
 
     void Update()
     {
-        Debug.Log(Time.deltaTime);
         if(_clickTime)
         {
             if(_timer > 0)

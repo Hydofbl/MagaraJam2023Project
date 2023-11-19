@@ -92,6 +92,7 @@ public class BaseEnemyManager : MonoBehaviour
         if (_enemyStats.CurrentHealth <= 0)
         {
             ChangeState(EnemyState.Die);
+            return;
         }
 
         PreviousState = CurrentState;
