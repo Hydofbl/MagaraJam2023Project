@@ -57,6 +57,7 @@ public class BaseEnemyManager : MonoBehaviour
                 DungeonController.Instance.CurrentEnemyCount--;
                 GameDataManager.Instance.AddCoin(_enemyStats.CurrentCoinAward);
                 IngameUIManager.Instance.SetCoinAmount(GameDataManager.Instance.GetCoin());
+                IngameUIManager.Instance.SetCurrentEnemy(DungeonController.Instance.CurrentEnemyCount);
 
                 Destroy(gameObject);
                 break;
