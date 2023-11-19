@@ -43,7 +43,7 @@ public class ScreensManager : MonoBehaviour
             intro.SetActive(false);
         }
 
-        else if (GameDataManager.Instance.GetLevel() == 4)
+        else if (GameDataManager.Instance.GetLevel() >= 4)
         {
             firstScene.SetActive(false);
             secondScene.SetActive(false);
